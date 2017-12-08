@@ -13,26 +13,22 @@ Config
 +-------------------+--------------------------------------------------+-----------------------------+
 | Name              | Default                                          | Description                 |
 +===================+==================================================+=============================+
-| ``Client ID``     |                                                  | Instagram app client id      |
+| ``Client ID``     |                                                  | Instagram app client id     |
 |                   |                                                  |                             |
 +-------------------+--------------------------------------------------+-----------------------------+
-| ``Client Secret`` |                                                  | Instagram app secret key     |
+| ``Client Secret`` |                                                  | Instagram app secret key    |
 |                   |                                                  |                             |
 +-------------------+--------------------------------------------------+-----------------------------+
-| ``Authorization`` | https://www.instagram.com/oauth/v2/authorization  | URL to the Instagram         |
+| ``Authorization`` | https://www.instagram.com/oauth/v2/authorization | URL to the Instagram        |
 | ``Endpoint``      |                                                  | authorization endpoint      |
 |                   |                                                  |                             |
 +-------------------+--------------------------------------------------+-----------------------------+
-| ``Token``         | https://www.instagram.com/oauth/v2/accessToken    | URL to the Instagram         |
+| ``Token``         | https://www.instagram.com/oauth/v2/accessToken   | URL to the Instagram        |
 | ``Endpoint``      |                                                  | authorization endpoint      |
 +-------------------+--------------------------------------------------+-----------------------------+
-| ``Scope``         |                                                  | A space-separated list of   |
+| ``Scope``         |    ``basic``                                     | A space-separated list of   |
 |                   |                                                  | scopes to request from      |
-|                   |                                                  | Instagram                    |
-+-------------------+--------------------------------------------------+-----------------------------+
-| ``User Info``     | https://api.instagram.com/v1/people/~?format=json | URL to the Instagram         |
-| ``Endpoint``      |                                                  | userinfo(profile) endpoint  |
-|                   |                                                  |                             |
+|                   |                                                  | Instagram                   |
 +-------------------+--------------------------------------------------+-----------------------------+
 
 Build plugin
@@ -67,7 +63,7 @@ Following jars must be in plugin group classpath.
 Please visit `curity.io`_ for more information about the Curity Identity
 Server.
 
-.. _Instagram app: https://developer.instagram.com/docs/oauth2
+.. _Instagram app: https://www.instagram.com/developer/clients/manage
 .. _curity.io/plugins: https://support.curity.io/docs/latest/developer-guide/plugins/index.html#plugin-installation
 .. _commons-codec-1.9.jar: http://central.maven.org/maven2/commons-codec/commons-codec/1.9/commons-codec-1.9.jar
 .. _commons-logging-1.2.jar: http://central.maven.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar
