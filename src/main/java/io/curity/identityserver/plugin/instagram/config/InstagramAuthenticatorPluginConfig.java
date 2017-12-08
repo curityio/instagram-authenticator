@@ -33,20 +33,16 @@ public interface InstagramAuthenticatorPluginConfig extends Configuration {
     String getClientSecret();
 
     @Description("URL to the Instagram authorization endpoint")
-    @DefaultURI("https://www.instagram.com/oauth/v2/authorization")
+    @DefaultURI("https://api.instagram.com/oauth/authorize")
     URI getAuthorizationEndpoint();
 
     @Description("URL to the Instagram token endpoint")
-    @DefaultURI("https://www.instagram.com/oauth/v2/accessToken")
+    @DefaultURI("https://api.instagram.com/oauth/access_token")
     URI getTokenEndpoint();
 
     @Description("A space-separated list of scopes to request from Instagram")
-    @DefaultString("")
+    @DefaultString("basic")
     String getScope();
-
-    @Description("URL to the Instagram userinfo(profile) endpoint")
-    @DefaultURI("https://api.instagram.com/v1/people/~?format=json")
-    URI getUserInfoEndpoint();
 
     SessionManager getSessionManager();
 

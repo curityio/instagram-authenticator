@@ -19,6 +19,11 @@ package io.curity.identityserver.plugin.instagram.authentication;
 import io.curity.identityserver.plugin.authentication.DefaultOAuthClient;
 import io.curity.identityserver.plugin.authentication.OAuthClient;
 import io.curity.identityserver.plugin.instagram.config.InstagramAuthenticatorPluginConfig;
+import se.curity.identityserver.sdk.attribute.Attribute;
+import se.curity.identityserver.sdk.attribute.Attributes;
+import se.curity.identityserver.sdk.attribute.AuthenticationAttributes;
+import se.curity.identityserver.sdk.attribute.ContextAttributes;
+import se.curity.identityserver.sdk.attribute.SubjectAttributes;
 import se.curity.identityserver.sdk.authentication.AuthenticationResult;
 import se.curity.identityserver.sdk.authentication.AuthenticatorRequestHandler;
 import se.curity.identityserver.sdk.service.ExceptionFactory;
@@ -66,7 +71,14 @@ public class CallbackRequestHandler
                 _config.getClientSecret(),
                 requestModel.getCode(),
                 requestModel.getState());
-        return _oauthClient.getAuthenticationResult(tokenMap.get(PARAM_ACCESS_TOKEN).toString(), _config.getUserInfoEndpoint().toString());
+
+        String userId = ((Map) tokenMap.get("user")).get("id").toString();
+
+        AuthenticationAttributes attributes = AuthenticationAttributes.of(
+                SubjectAttributes.of(userId, Attributes.fromMap(tokenMap)),
+                ContextAttributes.of(Attributes.of(Attribute.of(PARAM_ACCESS_TOKEN, tokenMap.get(PARAM_ACCESS_TOKEN).toString()))));
+        AuthenticationResult authenticationResult = new AuthenticationResult(attributes);
+        return Optional.ofNullable(authenticationResult);
     }
 
     @Override
