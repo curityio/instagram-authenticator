@@ -16,35 +16,39 @@
 
 package io.curity.identityserver.plugin.instagram.descriptor;
 
-import com.google.common.collect.ImmutableMap;
 import io.curity.identityserver.plugin.instagram.authentication.CallbackRequestHandler;
 import io.curity.identityserver.plugin.instagram.authentication.InstagramAuthenticatorRequestHandler;
 import io.curity.identityserver.plugin.instagram.config.InstagramAuthenticatorPluginConfig;
 import se.curity.identityserver.sdk.authentication.AuthenticatorRequestHandler;
 import se.curity.identityserver.sdk.plugin.descriptor.AuthenticatorPluginDescriptor;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class InstagramAuthenticatorPluginDescriptor
-        implements AuthenticatorPluginDescriptor<InstagramAuthenticatorPluginConfig> {
-    public final static String INDEX = "index";
+        implements AuthenticatorPluginDescriptor<InstagramAuthenticatorPluginConfig>
+{
     public final static String CALLBACK = "callback";
 
     @Override
-    public String getPluginImplementationType() {
+    public String getPluginImplementationType()
+    {
         return "instagram";
     }
 
     @Override
-    public Class<? extends InstagramAuthenticatorPluginConfig> getConfigurationType() {
+    public Class<? extends InstagramAuthenticatorPluginConfig> getConfigurationType()
+    {
         return InstagramAuthenticatorPluginConfig.class;
     }
 
     @Override
-    public Map<String, Class<? extends AuthenticatorRequestHandler<?>>> getAuthenticationRequestHandlerTypes() {
-        return ImmutableMap.of(
-                INDEX, InstagramAuthenticatorRequestHandler.class,
-                CALLBACK, CallbackRequestHandler.class);
+    public Map<String, Class<? extends AuthenticatorRequestHandler<?>>> getAuthenticationRequestHandlerTypes()
+    {
+        Map<String, Class<? extends AuthenticatorRequestHandler<?>>> handlers = new LinkedHashMap<>(2);
+        handlers.put("index", InstagramAuthenticatorRequestHandler.class);
+        handlers.put(CALLBACK, CallbackRequestHandler.class);
+        return handlers;
     }
 
 }
