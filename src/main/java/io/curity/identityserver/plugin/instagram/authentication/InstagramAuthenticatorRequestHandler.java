@@ -90,6 +90,27 @@ public class InstagramAuthenticatorRequestHandler implements AuthenticatorReques
     {
         //Add default basic scope
         scopes.add("basic");
+
+        if (_config.isPublicContent())
+        {
+            scopes.add("public_content");
+        }
+        if (_config.isFollowerList())
+        {
+            scopes.add("follower_list");
+        }
+        if (_config.isCommentsAccess())
+        {
+            scopes.add("comments");
+        }
+        if (_config.isRelationshipsAccess())
+        {
+            scopes.add("relationships");
+        }
+        if (_config.isLikesAccess())
+        {
+            scopes.add("likes");
+        }
     }
 
     private String createRedirectUri()

@@ -17,8 +17,7 @@
 package io.curity.identityserver.plugin.instagram.config;
 
 import se.curity.identityserver.sdk.config.Configuration;
-import se.curity.identityserver.sdk.config.annotation.DefaultString;
-import se.curity.identityserver.sdk.config.annotation.DefaultURI;
+import se.curity.identityserver.sdk.config.annotation.DefaultBoolean;
 import se.curity.identityserver.sdk.config.annotation.Description;
 import se.curity.identityserver.sdk.service.ExceptionFactory;
 import se.curity.identityserver.sdk.service.HttpClient;
@@ -27,7 +26,6 @@ import se.curity.identityserver.sdk.service.SessionManager;
 import se.curity.identityserver.sdk.service.WebServiceClientFactory;
 import se.curity.identityserver.sdk.service.authentication.AuthenticatorInformationProvider;
 
-import java.net.URI;
 import java.util.Optional;
 
 @SuppressWarnings("InterfaceNeverImplemented")
@@ -38,6 +36,26 @@ public interface InstagramAuthenticatorPluginConfig extends Configuration
 
     @Description("Secret key of client application")
     String getClientSecret();
+
+    @Description("Request a scope (public_content) that grants access to read any public profile info and media on a user’s behalf")
+    @DefaultBoolean(false)
+    boolean isPublicContent();
+
+    @Description("Request a scope (follower_list) that grants access to read the list of followers and followed-by users")
+    @DefaultBoolean(false)
+    boolean isFollowerList();
+
+    @Description("Request a scope (comments) that grants access to post and delete comments on a user’s behalf")
+    @DefaultBoolean(false)
+    boolean isCommentsAccess();
+
+    @Description("Request a scope (relationships) that grants access to follow and unfollow accounts on a user’s behalf")
+    @DefaultBoolean(false)
+    boolean isRelationshipsAccess();
+
+    @Description("Request a scope (likes) that grants access to like and unlike media on a user’s behalf")
+    @DefaultBoolean(false)
+    boolean isLikesAccess();
 
     @Description("The HTTP client with any proxy and TLS settings that will be used to connect to slack")
     Optional<HttpClient> getHttpClient();
