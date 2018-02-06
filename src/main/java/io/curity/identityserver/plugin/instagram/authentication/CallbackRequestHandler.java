@@ -44,6 +44,7 @@ import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -92,19 +93,41 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
         validateState(requestModel.getState());
         handleError(requestModel);
 
-        Map<String, Object> tokenResponseData = redeemCodeForTokens(requestModel);
+        Map<String, ?> tokenResponseData = redeemCodeForTokens(requestModel);
+        Object userObject = tokenResponseData.get("user");
 
+        if (userObject instanceof Map)
+        {
+            Map<String, String> userResponseData = asStringToStringMap((Map)userObject);
+            AuthenticationAttributes attributes = AuthenticationAttributes.of(
+                    SubjectAttributes.of(userResponseData.get("id"), Attributes.fromMap(userResponseData)),
+                    ContextAttributes.of(Attributes.of(Attribute.of("instagram_access_token",
+                            tokenResponseData.get("access_token").toString()))));
 
-        Map<String, String> userResponseData = ((Map) tokenResponseData.get("user"));
+            AuthenticationResult authenticationResult = new AuthenticationResult(attributes);
 
-        AuthenticationAttributes attributes = AuthenticationAttributes.of(
-                SubjectAttributes.of(userResponseData.get("id"), Attributes.fromMap(userResponseData)),
-                ContextAttributes.of(Attributes.of(Attribute.of("instagram_access_token", tokenResponseData.get("access_token").toString()))));
-        AuthenticationResult authenticationResult = new AuthenticationResult(attributes);
-        return Optional.ofNullable(authenticationResult);
+            return Optional.of(authenticationResult);
+        }
+        else
+        {
+            throw _exceptionFactory.internalServerException(ErrorCode.EXTERNAL_SERVICE_ERROR,
+                    "Could not convert response from Instagram as expected");
+        }
     }
 
-    private Map<String, Object> redeemCodeForTokens(CallbackGetRequestModel requestModel)
+    private static Map<String, String> asStringToStringMap(Map<?, ?> rawMap)
+    {
+        Map<String, String> result = new LinkedHashMap<>(rawMap.size());
+
+        for (Map.Entry<?, ?> entry : rawMap.entrySet())
+        {
+            result.put(entry.getKey().toString(), Objects.toString(entry.getValue()));
+        }
+
+        return result;
+    }
+
+    private Map<String, ?> redeemCodeForTokens(CallbackGetRequestModel requestModel)
     {
         HttpResponse tokenResponse = getWebServiceClient()
                 .withPath("/oauth/access_token")
@@ -150,19 +173,22 @@ public class CallbackRequestHandler implements AuthenticatorRequestHandler<Callb
         {
             if ("access_denied".equals(requestModel.getError()))
             {
-                _logger.debug("Got an error from Instagram: {} - {}", requestModel.getError(), requestModel.getErrorDescription());
+                _logger.debug("Got an error from Instagram: {} - {}", requestModel.getError(), requestModel
+                        .getErrorDescription());
 
                 throw _exceptionFactory.redirectException(
                         _authenticatorInformationProvider.getAuthenticationBaseUri().toASCIIString());
             }
 
-            _logger.warn("Got an error from Instagram: {} - {}", requestModel.getError(), requestModel.getErrorDescription());
+            _logger.warn("Got an error from Instagram: {} - {}", requestModel.getError(), requestModel
+                    .getErrorDescription());
 
             throw _exceptionFactory.externalServiceException("Login with Instagram failed");
         }
     }
 
-    private static Map<String, String> createPostData(String clientId, String clientSecret, String code, String callbackUri)
+    private static Map<String, String> createPostData(String clientId, String clientSecret, String code, String
+            callbackUri)
     {
         Map<String, String> data = new HashMap<>(5);
 
