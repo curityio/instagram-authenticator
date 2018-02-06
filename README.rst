@@ -1,7 +1,7 @@
 Instagram Authenticator Plug-in
 ===============================
 
-.. image:: https://travis-ci.org/curityio/instagram-authenticator.svg?branch=dev
+.. image:: https://travis-ci.org/curityio/instagram-authenticator.svg?branch=master
     :target: https://travis-ci.org/curityio/instagram-authenticator
 
 This project provides an opens source Instagram Authenticator plug-in for the Curity Identity Server. This allows an administrator to add functionality to Curity which will then enable end users to login using their Instagram credentials. The app that integrates with Curity may also be configured to receive the Instagram access token and refresh token, allowing it to manage resources in Instagram.
@@ -9,7 +9,7 @@ This project provides an opens source Instagram Authenticator plug-in for the Cu
 System Requirements
 ~~~~~~~~~~~~~~~~~~~
 
-* Curity Identity Server 3.0.0 and `its system requirements <https://developer.curity.io/docs/latest/system-admin-guide/system-requirements.html>`_
+* Curity Identity Server 2.4.0 and `its system requirements <https://developer.curity.io/docs/latest/system-admin-guide/system-requirements.html>`_
 
 Requirements for Building from Source
 """""""""""""""""""""""""""""""""""""
@@ -44,15 +44,10 @@ As `described in the Instagram documentation <https://www.instagram.com/develope
     :align: center
     :width: 500px
 
-
-
 .. figure:: docs/images/new-instagram-app2.png
     :name: new-instagram-app
     :align: center
     :width: 500px
-
-
-
 
 Then, give the app a name, e.g., ``Curity-Integration-App``.
 
@@ -71,7 +66,6 @@ URI Component                  Meaning
                                ``auth-authentication``.
 ``instagramAuthenticatorId``   This is the name given to the Instagram authenticator when defining it (e.g., ``instagram1``).
 ============================== =========================================================================================
-
 
 Creating a Instagram Authenticator in Curity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
