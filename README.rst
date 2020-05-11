@@ -1,8 +1,11 @@
 Instagram Authenticator Plug-in
 ===============================
-
-.. image:: https://travis-ci.org/curityio/instagram-authenticator.svg?branch=master
-    :target: https://travis-ci.org/curityio/instagram-authenticator
+   
+.. image:: https://curity.io/assets/images/badges/instagram-authenticator-quality.svg
+       :target: https://curity.io/resources/code-examples/status/
+       
+.. image:: https://curity.io/assets/images/badges/instagram-authenticator-availability.svg
+       :target: https://curity.io/resources/code-examples/status/
 
 This project provides an opens source Instagram Authenticator plug-in for the Curity Identity Server. This allows an administrator to add functionality to Curity which will then enable end users to login using their Instagram credentials. The app that integrates with Curity may also be configured to receive the Instagram access token and refresh token, allowing it to manage resources in Instagram.
 
